@@ -1,27 +1,32 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" class="htmlBody-loading">
+<html lang="en" dir="ltr" class="noScroll" style="scroll-behavior: smooth;">
     <head>
         <title>Slawomir Jakubek Portfolio</title>
+        <meta name="theme-color" content="black" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link type="text/css" rel="stylesheet" href="./css/normalize.css" />
         <link type="text/css" rel="stylesheet" href="./css/style.css" />
+        <link type="text/css" rel="stylesheet" href="./objects/sphere/css/style.css" />
         <script src="./js/jquery-3.6.0.min.js"></script>
         <script src="./js/javascript.js"></script>
+        <script src="./objects/sphere/Sphere.js"></script>
     </head>
-    <body class="htmlBody-loading">
+    <body class="noScroll">
 
         <header>
             <nav>
                 <ul>
-                    <li><a onclick="goTo('about')">about</a></li>
-                    <li><a onclick="goTo('projects')">projects</a></li>
-                    <li><a onclick="goTo('contact')">contact</a></li>
+                    <li><a onclick="toggleMenu('about')">about</a></li>
+                    <li><a onclick="toggleMenu('projects')">projects</a></li>
+                    <li><a onclick="toggleMenu('contact')">contact</a></li>
                 </ul>
-                <button onclick="toggleMenu()">&#9776;</button>
+                <button id="menuBtn" onclick="toggleMenu()">&#9776;</button>
             </nav>
             <section id="banner" class="banner-loading">
-                <h1 id="banner-title">SLAWOMIR<br>JAKUBEK</h1>
+                <p id="banner-name">SLAWOMIR</p>
                 <div id="banner-animation"></div>
+                <script>$('#banner-animation').append(new Sphere(280));</script>
+                <p id="banner-surname">JAKUBEK</p>
             </section>
         </header>
 
@@ -46,7 +51,7 @@
                         </div>
                     </div>
                     <div class="project-link">
-                        <button>open</button>
+                        <button>open 1</button>
                     </div>
                 </article>
 
@@ -63,7 +68,7 @@
                         </div>
                     </div>
                     <div class="project-link">
-                        <button>open</button>
+                        <button>open 2</button>
                     </div>
                 </article>
 
@@ -80,7 +85,7 @@
                         </div>
                     </div>
                     <div class="project-link">
-                        <button>open</button>
+                        <button>open 3</button>
                     </div>
                 </article>
             </section>
