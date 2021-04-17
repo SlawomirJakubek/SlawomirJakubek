@@ -2,6 +2,10 @@ let isMenuOpen = false;
 let scrollNavBar = false;
 let windowScrollHistory = [0, 0];
 let windowLastScroll;
+const style = getComputedStyle(document.documentElement);
+const menuHeight = parseInt(style.getPropertyValue('--menuHeight').replace('px', ''));
+const menuButtonHeight = parseInt(style.getPropertyValue('--menuButtonHeight').replace('px', ''));
+const menuStandbyTop = (menuHeight - menuButtonHeight) * -1;
 
 function toggleMenu(goto){
     
@@ -15,8 +19,9 @@ function toggleMenu(goto){
         if(typeof goto === 'undefined'){
             $(window).scrollTop(windowLastScroll);
         }else{
-            window.location.href = `#${goto}`;
-            $(window).scrollTop($(window).scrollTop() - 62);
+            //window.location.href = `#${goto}`;
+            window.scrollTo(0, document.getElementById(goto).getBoundingClientRect().top);
+            $(window).scrollTop($(window).scrollTop() - menuButtonHeight);
         }
         
     }else{
@@ -26,7 +31,7 @@ function toggleMenu(goto){
 
         $('#banner').addClass('disabled');
         $(window).scrollTop(0);
-        $('body').addClass('noScroll');
+        $('html, body').addClass('noScroll');
     }
     isMenuOpen = !isMenuOpen;
     $("nav").css('top', '');
@@ -41,79 +46,74 @@ $(document).ready(()=>{
         if(isMenuOpen){
             $("nav").css('top', '0px');
         }else{
-            $("nav").css('top', '-154px');
+            $("nav").css('top', `${menuStandbyTop}px`);
         }
         console.log(e);
     });
 });
 
 $(window).on('load', () => {
+
     console.log('loaded');
-    //on logo loaded
+    //on page loaded
     window.setTimeout(()=>{
+        $('#banner').css('overflow-y', '');
+        $('html, body').removeClass('noScroll');
 
-        //on page loaded
-        window.setTimeout(()=>{
-            $('#banner').removeClass('banner-loading');
-            $('#banner').addClass('banner-loaded');
-            $('html, body').removeClass('noScroll');
+        $(window).scroll(e => {
 
-            $(window).scroll(e => {
+            
+            windowScrollHistory.push($(window).scrollTop());
+    
+            if(windowScrollHistory.length > 2){
+                windowScrollHistory.shift();
+            }
 
-                
-                windowScrollHistory.push($(window).scrollTop());
-        
-                if(windowScrollHistory.length > 2){
-                    windowScrollHistory.shift();
-                }
-
-                let isScrollingDown = windowScrollHistory[0] < windowScrollHistory[1];
+            let isScrollingDown = windowScrollHistory[0] < windowScrollHistory[1];
 
 
-                //show or hide nav bar on scroll
-                if(!isMenuOpen && scrollNavBar){
+            //show or hide nav bar on scroll
+            if(!isMenuOpen && scrollNavBar){
 
-                    let navTop = parseInt($("nav").css('top').replace('px', ''));
-                    let newTop;
-                    if(isScrollingDown){
-                        
-                        if(navTop <= -220){
-                            newTop = -220;
-                        }else{
-                            newTop = navTop - 2;
-                        }
-
+                let navTop = parseInt($("nav").css('top').replace('px', ''));
+                let newTop;
+                if(isScrollingDown){
+                    
+                    if(navTop <= (menuHeight + 5) * -1){
+                        newTop = (menuHeight + 5) * -1;
                     }else{
-
-                        if(navTop >= -154 || windowScrollHistory[1] == 0){
-                            newTop = -154;
-                        }else{
-                            newTop = navTop + 4;
-                        }
-
+                        newTop = navTop - 2;
                     }
-                    $("nav").css('top', `${newTop}px`);
+
+                }else{
+
+                    if(navTop >= menuStandbyTop || windowScrollHistory[1] == 0){
+                        newTop = menuStandbyTop;
+                    }else{
+                        newTop = navTop + 4;
+                    }
+
                 }
+                $("nav").css('top', `${newTop}px`);
+            }
 
-                console.log(windowScrollHistory);
-            });
-            
-            $(window).on('click', e => {
-                console.log(e);
-            });
+            console.log(windowScrollHistory);
+        });
+        
+        $(window).on('click', e => {
+            console.log(e);
+        });
 
-            //display menu
-            $('nav').css('transition', 'top .5s');
-            $('nav').css('top', '-154px');
-            window.scrollTo(0, document.getElementById('about').getBoundingClientRect().top - 62);
-            
-            window.setTimeout(()=>{
-                $('html').css('scroll-behavior', '');
-                $('nav').css('transition', '');
-                scrollNavBar = true;
-            }, 1000);
-
+        //display menu
+        $('nav').css('transition', 'top .5s');
+        $('nav').css('top', `${menuStandbyTop}px`);
+        window.scrollTo(0, document.getElementById('about').getBoundingClientRect().top - menuButtonHeight);
+        
+        window.setTimeout(()=>{
+            $('html').css('scroll-behavior', '');
+            $('nav').css('transition', '');
+            scrollNavBar = true;
         }, 1000);
-    }, 1000);
 
+    }, 0000);
 });
