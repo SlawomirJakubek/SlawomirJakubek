@@ -3,6 +3,7 @@
     <head>
         <title>Test</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="theme-color" content="black" />
         <link type="text/css" rel="stylesheet" href="./css/normalize.css" />
     </head>
     <style>
@@ -112,6 +113,15 @@
         /* END ABOUT */
 
         /* PROJECTS */
+        #projects{
+            overflow: hidden;
+        }
+
+        article{
+            margin: 0px auto 150px auto;
+            box-shadow: 0px 15px 50px -10px rgba(255, 255, 255, 0.281);
+        }
+
         .project-technologies p, .project-links p, .project-galeries p{
             font-size: .5em;
             line-height: normal;
@@ -134,6 +144,8 @@
 
         #projects h3, #projects h4{
             text-align: center;
+            z-index: 1;
+            position: relative;
         }
 
         #projects button{
@@ -144,12 +156,14 @@
             cursor: pointer;
         }
 
-        .project-gallery img{
+        .project-gallery img, .project-link img{
             height: 50px;
         }
 
         .project-details{
             text-align: center;
+            position: relative;
+            z-index: 1;
         }
 
         .project-details{
@@ -158,21 +172,53 @@
             justify-content: space-around;
         }
 
+        .project{
+            position: relative;
+        }
+        
+        article > img{
+            position: absolute;
+            right: -15%;
+            height: 100%;
+            filter: brightness(50%);
+        }
+
+        img[src="./img/bg/splashes/splash2.png"]{
+            left: -10%;
+        }
+
+        img[src="./img/bg/splashes/splash3.png"]{
+            right: -5%;
+        }
+
+        img[src="./img/bg/splashes/splash4.png"]{
+            left: -5%;
+        }
+
+        /* footer */
+        footer{
+            text-align: center;
+        }
+
+        footer a{
+            color: black;
+            text-decoration: none;
+        }
+
     </style>
     <body>
         <div class="section-container">
             <section id="about">
                 <h2>ABOUT</h2>
-                <img src="./img/author.jpg" />
-                Nullam justo leo, pharetra eu luctus et, vulputate ut sem. Maecenas eget lacinia tortor. Suspendisse lectus felis, viverra quis tincidunt ut, aliquet quis purus. Mauris venenatis elit sed quam ultrices, quis faucibus purus mollis. Phasellus vitae euismod lorem, sit amet tristique urna. Phasellus dictum pulvinar augue, sit amet tincidunt risus blandit id. Quisque lacinia, sapien at porta congue, purus sem pulvinar lectus, ac blandit nisi urna quis urna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed facilisis, ipsum ut aliquam pellentesque, tellus dui tempus metus, a pulvinar est mauris vitae lorem.
+                <img src="./img/author.jpg" />Nullam justo leo, pharetra eu luctus et, vulputate ut sem. Maecenas eget lacinia tortor. Suspendisse lectus felis, viverra quis tincidunt ut, aliquet quis purus. Mauris venenatis elit sed quam ultrices, quis faucibus purus mollis. Phasellus vitae euismod lorem, sit amet tristique urna. Phasellus dictum pulvinar augue, sit amet tincidunt risus blandit id. Quisque lacinia, sapien at porta congue, purus sem pulvinar lectus, ac blandit nisi urna quis urna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed facilisis, ipsum ut aliquam pellentesque, tellus dui tempus metus, a pulvinar est mauris vitae lorem.
             </section>
         </div>
         <div class="section-container">
             <section id="projects">
                 <h2>PROJECTS</h2>
                 <article class="project">
+                    <img src="./img/bg/splashes/splash1.png" />
                     <h3>Lorem Ipsum Alpha</h3>
-                    <div>
                         <div class="project-details">
                             <div class="project-description">
                                 <p>Nam et tempor libero. Ut efficitur nulla turpis, nec posuere velit venenatis sollicitudin. Duis ornare justo eros, quis dapibus sem convallis ut. Vivamus orci velit, porta ac felis et, vehicula accumsan eros.</p>
@@ -198,7 +244,7 @@
                                 <h4>LINKS</h4>
                                 <div>
                                     <div class="project-link button">
-                                        <img src="./img/icons/www.png" />
+                                        <img src="./img/icons/language_white_24dp.svg" />
                                         <p>WWW</p>
                                     </div>
                                     <div class="project-link button">
@@ -221,9 +267,172 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </article>
+
+                <article class="project">
+                    <img class="project-bg-align-left" src="./img/bg/splashes/splash2.png" />
+                    <h3>Lorem Ipsum Beta</h3>
+                        <div class="project-details">
+                            <div class="project-description">
+                                <p>Nam et tempor libero. Ut efficitur nulla turpis, nec posuere velit venenatis sollicitudin. Duis ornare justo eros, quis dapibus sem convallis ut. Vivamus orci velit, porta ac felis et, vehicula accumsan eros.</p>
+                            </div>
+                            <div class="project-technologies">
+                                <h4>TECHNOLOGIES</h4>
+                                <div>
+                                    <div class="project-technology">
+                                        <img src="./img/icons/html.png" />
+                                        <p>HTML 5</p>
+                                    </div>
+                                    <div class="project-technology">
+                                        <img src="./img/icons/css.png" />
+                                        <p>CSS 3</p>
+                                    </div>
+                                    <div class="project-technology">
+                                        <img src="./img/icons/javascript.png" />
+                                        <p>ECMAScript 2018</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-links">
+                                <h4>LINKS</h4>
+                                <div>
+                                    <div class="project-link button">
+                                        <img src="./img/icons/language_white_24dp.svg" />
+                                        <p>WWW</p>
+                                    </div>
+                                    <div class="project-link button">
+                                        <img src="./img/icons/github.png" />
+                                        <p>Github</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-galeries">
+                                <h4>GALLERY</h4>
+                                <div>
+                                    <div class="project-gallery button">
+                                        <img src="./img/icons/phone_android_white_24dp.svg" />
+                                        <p>Mobile</p>
+                                    </div>
+                                    <div class="project-gallery button">
+                                        <img src="./img/icons/desktop_windows_white_24dp.svg" />
+                                        <p>Desktop</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </article>
+
+                <article class="project">
+                    <img src="./img/bg/splashes/splash3.png" />
+                    <h3>Lorem Ipsum Gamma</h3>
+                        <div class="project-details">
+                            <div class="project-description">
+                                <p>Nam et tempor libero. Ut efficitur nulla turpis, nec posuere velit venenatis sollicitudin. Duis ornare justo eros, quis dapibus sem convallis ut. Vivamus orci velit, porta ac felis et, vehicula accumsan eros.</p>
+                            </div>
+                            <div class="project-technologies">
+                                <h4>TECHNOLOGIES</h4>
+                                <div>
+                                    <div class="project-technology">
+                                        <img src="./img/icons/html.png" />
+                                        <p>HTML 5</p>
+                                    </div>
+                                    <div class="project-technology">
+                                        <img src="./img/icons/css.png" />
+                                        <p>CSS 3</p>
+                                    </div>
+                                    <div class="project-technology">
+                                        <img src="./img/icons/javascript.png" />
+                                        <p>ECMAScript 2018</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-links">
+                                <h4>LINKS</h4>
+                                <div>
+                                    <div class="project-link button">
+                                        <img src="./img/icons/language_white_24dp.svg" />
+                                        <p>WWW</p>
+                                    </div>
+                                    <div class="project-link button">
+                                        <img src="./img/icons/github.png" />
+                                        <p>Github</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-galeries">
+                                <h4>GALLERY</h4>
+                                <div>
+                                    <div class="project-gallery button">
+                                        <img src="./img/icons/phone_android_white_24dp.svg" />
+                                        <p>Mobile</p>
+                                    </div>
+                                    <div class="project-gallery button">
+                                        <img src="./img/icons/desktop_windows_white_24dp.svg" />
+                                        <p>Desktop</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </article>
+
+                <article class="project">
+                    <img src="./img/bg/splashes/splash4.png" />
+                    <h3>Lorem Ipsum Delta</h3>
+                        <div class="project-details">
+                            <div class="project-description">
+                                <p>Nam et tempor libero. Ut efficitur nulla turpis, nec posuere velit venenatis sollicitudin. Duis ornare justo eros, quis dapibus sem convallis ut. Vivamus orci velit, porta ac felis et, vehicula accumsan eros.</p>
+                            </div>
+                            <div class="project-technologies">
+                                <h4>TECHNOLOGIES</h4>
+                                <div>
+                                    <div class="project-technology">
+                                        <img src="./img/icons/html.png" />
+                                        <p>HTML 5</p>
+                                    </div>
+                                    <div class="project-technology">
+                                        <img src="./img/icons/css.png" />
+                                        <p>CSS 3</p>
+                                    </div>
+                                    <div class="project-technology">
+                                        <img src="./img/icons/javascript.png" />
+                                        <p>ECMAScript 2018</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-links">
+                                <h4>LINKS</h4>
+                                <div>
+                                    <div class="project-link button">
+                                        <img src="./img/icons/language_white_24dp.svg" />
+                                        <p>WWW</p>
+                                    </div>
+                                    <div class="project-link button">
+                                        <img src="./img/icons/github.png" />
+                                        <p>Github</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-galeries">
+                                <h4>GALLERY</h4>
+                                <div>
+                                    <div class="project-gallery button">
+                                        <img src="./img/icons/phone_android_white_24dp.svg" />
+                                        <p>Mobile</p>
+                                    </div>
+                                    <div class="project-gallery button">
+                                        <img src="./img/icons/desktop_windows_white_24dp.svg" />
+                                        <p>Desktop</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </article>
+
+
             </section>
         </div>
+        <footer>
+            <a href="http://www.freepik.com" target="_blank">Designed by denamorado / Freepik</a>
+        </footer>
     </body>
 </html>
