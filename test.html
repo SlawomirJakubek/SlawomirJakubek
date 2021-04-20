@@ -27,6 +27,18 @@
             unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
         }
 
+        .button{
+            transition: all .3s;
+        }
+
+        @media (hover: hover){
+            .button:not([disabled]):hover{
+                filter:drop-shadow(0 0 4px white);
+                transform: scale(1.1);
+                cursor: pointer;
+            }
+        }
+
         *{
             box-sizing: border-box;
         }
@@ -34,58 +46,153 @@
         body{
             text-align: center;
             background-color: black;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .section-container{
-            display: inline-block;
-        }
-
-        section{
             min-width: 360px;
             max-width: 1100px;
-            /*border: 1px solid rgb(71, 71, 71);*/
+            margin: 0 auto;
             color: rgb(208, 254, 255);
-            font-size: 1.25rem;
-            text-align: justify;
-            padding: 10%;
-            line-height: 1.5em;
+        }
+
+        
+
+        section{
+            padding: 3%;
+            margin: 100px 0 100px 0;
         }
 
         h2{
+            font-size: 2em;
             font-family: 'Work Sans', 'Times New Roman', Times, serif;
-            padding-left: 0%;
+            text-align: left;
+            padding: .5em 0 .5em 1em;
             border: 1px solid rgba(71, 71, 71, 0.219);
             margin: 0 0 40px 0;
-            font-size: 2em;
             line-height: normal;
             background-color: rgba(0, 139, 139, 0.164);
         }
 
-        .button{
-            cursor: pointer;
+        /* ABOUT */
+        section#about{
+            text-align: justify;
+        }
+        section#about > div{
+            line-height: 2em;
+            padding: 0 20px;
         }
 
-        /* ABOUT */
         section#about img{
-            width: 55%;
-            /*border: 1px solid rgba(71, 71, 71, 0.219);*/
+            margin-top: 8em;
+            width: 50%;
             border-radius: 30%;
             float: left;
             shape-outside: border-box;
-            margin: 8em 20px 20px -5%;
-            padding: 5% 5% 5% 0;
+            padding: 7% 7% 7% 0;
             filter: grayscale(80%) brightness(90%);
         }
+        /**/
 
-        @media screen and (min-width: 470px){
-            section{
-                font-size: 1.7rem;
+        /* PROJECTS */
+        #projects{
+            overflow: hidden;
+        }
+
+            .project{
+                position: relative;
+                margin-bottom: 150px;
+                padding-bottom: 40px;
+                box-shadow: 0px 15px 50px -10px rgba(255, 255, 255, 0.281);
             }
 
+            .project:last-child{
+                margin-bottom: 50px;
+            }
+
+                .project-background{
+                    position: absolute;
+                    right: -15%;
+                    height: 100%;
+                    filter: brightness(50%);
+                }
+
+                img[src="./img/bg/splashes/splash2.png"]{
+                    left: -10%;
+                }
+
+                img[src="./img/bg/splashes/splash3.png"]{
+                    right: -5%;
+                }
+
+                img[src="./img/bg/splashes/splash4.png"]{
+                    left: -5%;
+                }
+
+                .project h3{
+                    z-index: 1;
+                    position: relative;
+                    padding-top: 1em;
+                    text-transform: uppercase;
+                }
+
+                .project-details{
+                    position: relative;
+                    z-index: 1;
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: space-around;
+                }
+
+                    .project-description p{
+                        line-height: 2em;
+                    }
+
+                    .project-details > div{
+                        margin: 0 20px;
+                    }
+
+                    .project-icon-group{
+                        display: flex;
+                        justify-content: space-between;
+                    }
+
+                    .project-icon-group a{
+                        color: unset;
+                        text-decoration: unset;
+                    }
+
+                    .project-icon{
+                        margin: 0 15px;
+                    }
+
+                    .project-icon img{
+                        height: 40px;
+                    }
+
+                    .project-icon p{
+                        font-size: .7em;
+                        line-height: normal;
+                        margin-top: 3px;
+                    }
+
+        /* footer */
+        footer a{
+            color: black;
+            text-decoration: none;
+        }
+
+        /* MEDIA QUERIES */
+        @media screen and (min-width: 470px){
+            body{
+                font-size: 1.25rem;
+            }
             section#about img{
-                width: 50%;
+                width: 45%;
+            }
+
+            section#about > div{
+                padding: 0 30px;
+            }
+
+            section{
+                padding: 4%;
             }
         }
 
@@ -95,344 +202,517 @@
                 margin-top: 4em;
                 width: 40%;
             }
+
+            section#about > div{
+                padding: 0 40px;
+            }
+
+            section{
+                padding: 6%;
+            }
         }
 
         @media screen and (min-width: 750px){
+            body{
+                font-size: 1.5rem;
+            }
+            
             section{
-                font-size: 2rem;
+                padding: 8%;
             }
         }
 
         @media screen and (min-width: 950px){
             section#about img{
                 margin-top: 0;
-                width: 40%;
+                width: 30%;
+            }
+
+            section#about > div{
+                padding: 0 50px;
+            }
+
+            section{
+                padding: 10%;
             }
         }
 
-        /* END ABOUT */
 
-        /* PROJECTS */
-        #projects{
-            overflow: hidden;
-        }
-
-        article{
-            margin: 0px auto 150px auto;
-            box-shadow: 0px 15px 50px -10px rgba(255, 255, 255, 0.281);
-        }
-
-        .project-technologies p, .project-links p, .project-galeries p{
-            font-size: .5em;
-            line-height: normal;
-            margin-top: 3px;
-        }
-
-        .project-technologies > div, .project-links > div, .project-galeries > div{
-            display: flex;
-            justify-content: space-around;
-        }
-
-        .project-technology, .project-links, .project-galeries{
-            text-align: center;
-            margin: 0 20px;
-        }
-
-        .project-technology, .project-link, .project-gallery{
-            margin: 0 20px;
-        }
-
-        #projects h3, #projects h4{
-            text-align: center;
-            z-index: 1;
-            position: relative;
-        }
-
-        #projects button{
-            margin: 0 auto;
-            border-radius: 10%;
-            padding: .5em 1em;
-            background-color: rgb(0, 156, 156);
-            cursor: pointer;
-        }
-
-        .project-gallery img, .project-link img{
-            height: 50px;
-        }
-
-        .project-details{
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .project-details{
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-        }
-
-        .project{
-            position: relative;
-        }
-        
-        article > img{
-            position: absolute;
-            right: -15%;
+        /* gallery */
+        #gallery{
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
             height: 100%;
-            filter: brightness(50%);
+            background-color: black;
+            z-index: 10;
+            font-size: 5rem;
+            user-select: none;
         }
 
-        img[src="./img/bg/splashes/splash2.png"]{
-            left: -10%;
+        /* #gallery button{
+            margin: 0;
+        } */
+
+        #gallery > div{
+            position: absolute;
+            width: 100%;
+            height: 100%;
         }
 
-        img[src="./img/bg/splashes/splash3.png"]{
-            right: -5%;
+        #gallery-image-cont{
+            z-index: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        img[src="./img/bg/splashes/splash4.png"]{
-            left: -5%;
+        #gallery-image-cont img{
+            max-height: 90%;
+            max-width: 90%;
+            box-shadow: 10px 10px 30px -15px rgba(255, 255, 255, 0.719);
+
         }
 
-        /* footer */
-        footer{
-            text-align: center;
+        #gallery-close-btn{
+            position: absolute;
+            z-index: 2;
+            top: 10px;
+            right: 10px;
+            text-align: right;
+            font-size: 3rem;
         }
 
-        footer a{
-            color: black;
-            text-decoration: none;
+        #gallery-image-navigation{
+            z-index: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
+
 
     </style>
     <body>
-        <div class="section-container">
-            <section id="about">
-                <h2>ABOUT</h2>
-                <img src="./img/author.jpg" />Nullam justo leo, pharetra eu luctus et, vulputate ut sem. Maecenas eget lacinia tortor. Suspendisse lectus felis, viverra quis tincidunt ut, aliquet quis purus. Mauris venenatis elit sed quam ultrices, quis faucibus purus mollis. Phasellus vitae euismod lorem, sit amet tristique urna. Phasellus dictum pulvinar augue, sit amet tincidunt risus blandit id. Quisque lacinia, sapien at porta congue, purus sem pulvinar lectus, ac blandit nisi urna quis urna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed facilisis, ipsum ut aliquam pellentesque, tellus dui tempus metus, a pulvinar est mauris vitae lorem.
-            </section>
+        <div id="gallery">
+            <div id="gallery-image-cont">
+                <img id="gallery-img" src="#" alt="gallery image" />
+            </div>
+            <button onclick="closeGallery()" id="gallery-close-btn" class="button">&#9746;</button>
+            <div id="gallery-image-navigation">
+                <button onclick="prevImg()" class="button" id="gallery-prev-image-btn">&#10094;</button>
+                <button onclick="nextImg()" class="button" id="gallery-next-image-btn">&#10095;</button>
+            </div>
         </div>
-        <div class="section-container">
-            <section id="projects">
-                <h2>PROJECTS</h2>
-                <article class="project">
-                    <img src="./img/bg/splashes/splash1.png" />
-                    <h3>Lorem Ipsum Alpha</h3>
-                        <div class="project-details">
-                            <div class="project-description">
-                                <p>Nam et tempor libero. Ut efficitur nulla turpis, nec posuere velit venenatis sollicitudin. Duis ornare justo eros, quis dapibus sem convallis ut. Vivamus orci velit, porta ac felis et, vehicula accumsan eros.</p>
-                            </div>
-                            <div class="project-technologies">
-                                <h4>TECHNOLOGIES</h4>
-                                <div>
-                                    <div class="project-technology">
-                                        <img src="./img/icons/html.png" />
-                                        <p>HTML 5</p>
-                                    </div>
-                                    <div class="project-technology">
-                                        <img src="./img/icons/css.png" />
-                                        <p>CSS 3</p>
-                                    </div>
-                                    <div class="project-technology">
-                                        <img src="./img/icons/javascript.png" />
-                                        <p>ECMAScript 2018</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="project-links">
-                                <h4>LINKS</h4>
-                                <div>
-                                    <div class="project-link button">
-                                        <img src="./img/icons/language_white_24dp.svg" />
-                                        <p>WWW</p>
-                                    </div>
-                                    <div class="project-link button">
-                                        <img src="./img/icons/github.png" />
-                                        <p>Github</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="project-galeries">
-                                <h4>GALLERY</h4>
-                                <div>
-                                    <div class="project-gallery button">
-                                        <img src="./img/icons/phone_android_white_24dp.svg" />
-                                        <p>Mobile</p>
-                                    </div>
-                                    <div class="project-gallery button">
-                                        <img src="./img/icons/desktop_windows_white_24dp.svg" />
-                                        <p>Desktop</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                </article>
-
-                <article class="project">
-                    <img class="project-bg-align-left" src="./img/bg/splashes/splash2.png" />
-                    <h3>Lorem Ipsum Beta</h3>
-                        <div class="project-details">
-                            <div class="project-description">
-                                <p>Nam et tempor libero. Ut efficitur nulla turpis, nec posuere velit venenatis sollicitudin. Duis ornare justo eros, quis dapibus sem convallis ut. Vivamus orci velit, porta ac felis et, vehicula accumsan eros.</p>
-                            </div>
-                            <div class="project-technologies">
-                                <h4>TECHNOLOGIES</h4>
-                                <div>
-                                    <div class="project-technology">
-                                        <img src="./img/icons/html.png" />
-                                        <p>HTML 5</p>
-                                    </div>
-                                    <div class="project-technology">
-                                        <img src="./img/icons/css.png" />
-                                        <p>CSS 3</p>
-                                    </div>
-                                    <div class="project-technology">
-                                        <img src="./img/icons/javascript.png" />
-                                        <p>ECMAScript 2018</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="project-links">
-                                <h4>LINKS</h4>
-                                <div>
-                                    <div class="project-link button">
-                                        <img src="./img/icons/language_white_24dp.svg" />
-                                        <p>WWW</p>
-                                    </div>
-                                    <div class="project-link button">
-                                        <img src="./img/icons/github.png" />
-                                        <p>Github</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="project-galeries">
-                                <h4>GALLERY</h4>
-                                <div>
-                                    <div class="project-gallery button">
-                                        <img src="./img/icons/phone_android_white_24dp.svg" />
-                                        <p>Mobile</p>
-                                    </div>
-                                    <div class="project-gallery button">
-                                        <img src="./img/icons/desktop_windows_white_24dp.svg" />
-                                        <p>Desktop</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                </article>
-
-                <article class="project">
-                    <img src="./img/bg/splashes/splash3.png" />
-                    <h3>Lorem Ipsum Gamma</h3>
-                        <div class="project-details">
-                            <div class="project-description">
-                                <p>Nam et tempor libero. Ut efficitur nulla turpis, nec posuere velit venenatis sollicitudin. Duis ornare justo eros, quis dapibus sem convallis ut. Vivamus orci velit, porta ac felis et, vehicula accumsan eros.</p>
-                            </div>
-                            <div class="project-technologies">
-                                <h4>TECHNOLOGIES</h4>
-                                <div>
-                                    <div class="project-technology">
-                                        <img src="./img/icons/html.png" />
-                                        <p>HTML 5</p>
-                                    </div>
-                                    <div class="project-technology">
-                                        <img src="./img/icons/css.png" />
-                                        <p>CSS 3</p>
-                                    </div>
-                                    <div class="project-technology">
-                                        <img src="./img/icons/javascript.png" />
-                                        <p>ECMAScript 2018</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="project-links">
-                                <h4>LINKS</h4>
-                                <div>
-                                    <div class="project-link button">
-                                        <img src="./img/icons/language_white_24dp.svg" />
-                                        <p>WWW</p>
-                                    </div>
-                                    <div class="project-link button">
-                                        <img src="./img/icons/github.png" />
-                                        <p>Github</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="project-galeries">
-                                <h4>GALLERY</h4>
-                                <div>
-                                    <div class="project-gallery button">
-                                        <img src="./img/icons/phone_android_white_24dp.svg" />
-                                        <p>Mobile</p>
-                                    </div>
-                                    <div class="project-gallery button">
-                                        <img src="./img/icons/desktop_windows_white_24dp.svg" />
-                                        <p>Desktop</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                </article>
-
-                <article class="project">
-                    <img src="./img/bg/splashes/splash4.png" />
-                    <h3>Lorem Ipsum Delta</h3>
-                        <div class="project-details">
-                            <div class="project-description">
-                                <p>Nam et tempor libero. Ut efficitur nulla turpis, nec posuere velit venenatis sollicitudin. Duis ornare justo eros, quis dapibus sem convallis ut. Vivamus orci velit, porta ac felis et, vehicula accumsan eros.</p>
-                            </div>
-                            <div class="project-technologies">
-                                <h4>TECHNOLOGIES</h4>
-                                <div>
-                                    <div class="project-technology">
-                                        <img src="./img/icons/html.png" />
-                                        <p>HTML 5</p>
-                                    </div>
-                                    <div class="project-technology">
-                                        <img src="./img/icons/css.png" />
-                                        <p>CSS 3</p>
-                                    </div>
-                                    <div class="project-technology">
-                                        <img src="./img/icons/javascript.png" />
-                                        <p>ECMAScript 2018</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="project-links">
-                                <h4>LINKS</h4>
-                                <div>
-                                    <div class="project-link button">
-                                        <img src="./img/icons/language_white_24dp.svg" />
-                                        <p>WWW</p>
-                                    </div>
-                                    <div class="project-link button">
-                                        <img src="./img/icons/github.png" />
-                                        <p>Github</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="project-galeries">
-                                <h4>GALLERY</h4>
-                                <div>
-                                    <div class="project-gallery button">
-                                        <img src="./img/icons/phone_android_white_24dp.svg" />
-                                        <p>Mobile</p>
-                                    </div>
-                                    <div class="project-gallery button">
-                                        <img src="./img/icons/desktop_windows_white_24dp.svg" />
-                                        <p>Desktop</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                </article>
+        <div id="main-content">
+            <div class="section-container">
+                <section id="about">
+                    <h2>ABOUT</h2>
+                    <div>
+                        <img src="./img/author.jpg" />Nullam justo leo, pharetra eu luctus et, vulputate ut sem. Maecenas eget lacinia tortor. Suspendisse lectus felis, viverra quis tincidunt ut, aliquet quis purus. Mauris venenatis elit sed quam ultrices, quis faucibus purus mollis. Phasellus vitae euismod lorem, sit amet tristique urna. Phasellus dictum pulvinar augue, sit amet tincidunt risus blandit id. Quisque lacinia, sapien at porta congue, purus sem pulvinar lectus, ac blandit nisi urna quis urna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed facilisis, ipsum ut aliquam pellentesque, tellus dui tempus metus, a pulvinar est mauris vitae lorem.
+                    </div>
+                    </section>
+            </div>
+            <div class="section-container">
+                <section id="projects">
+                    <h2>PROJECTS</h2>
 
 
-            </section>
+                    <article class="project">
+                        <img class="project-background" src="./img/bg/splashes/splash1.png" />
+                        <h3>Nam et tempor libero</h3>
+                            <div class="project-details">
+                                <div class="project-description">
+                                    <p>Nam et tempor libero. Ut efficitur nulla turpis, nec posuere velit venenatis sollicitudin. Duis ornare justo eros, quis dapibus sem convallis ut. Vivamus orci velit, porta ac felis et, vehicula accumsan eros.</p>
+                                </div>
+                                <div>
+                                    <h4>TECHNOLOGIES</h4>
+                                    <div class="project-icon-group">
+                                        <div class="project-icon">
+                                            <img src="./img/icons/html.png" />
+                                            <p>HTML 5</p>
+                                        </div>
+                                        <div class="project-icon">
+                                            <img src="./img/icons/css.png" />
+                                            <p>CSS 3</p>
+                                        </div>
+                                        <div class="project-icon">
+                                            <img src="./img/icons/javascript.png" />
+                                            <p>ECMAScript 2018</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4>LINKS</h4>
+                                    <div class="project-icon-group">
+                                        <a href="https://www.google.com/search?q=alpha" target="_blank" title="Visit project">
+                                            <div class="project-icon button">
+                                                <img src="./img/icons/language_white_24dp.svg" />
+                                                <p>WWW</p>
+                                            </div>
+                                        </a>
+                                        <a href="https://www.github.com/" target="_blank" title="See project's codebase">
+                                            <div class="project-icon button">
+                                                <img src="./img/icons/github.png" />
+                                                <p>Github</p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4>GALLERY</h4>
+                                    <div class="project-icon-group">
+                                        <div onclick="openGallery('a', 'mobile')" class="project-icon button">
+                                            <img src="./img/icons/phone_android_white_24dp.svg" />
+                                            <p>Mobile</p>
+                                        </div>
+                                        <div onclick="openGallery('a', 'desktop')" class="project-icon button">
+                                            <img src="./img/icons/desktop_windows_white_24dp.svg" />
+                                            <p>Desktop</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </article>
+
+                    <article class="project">
+                        <img class="project-background" src="./img/bg/splashes/splash2.png" />
+                        <h3>Aenean sed enim nisi</h3>
+                            <div class="project-details">
+                                <div class="project-description">
+                                    <p>Nam et tempor libero. Ut efficitur nulla turpis, nec posuere velit venenatis sollicitudin. Duis ornare justo eros, quis dapibus sem convallis ut. Vivamus orci velit, porta ac felis et, vehicula accumsan eros.</p>
+                                </div>
+                                <div>
+                                    <h4>TECHNOLOGIES</h4>
+                                    <div class="project-icon-group">
+                                        <div class="project-icon">
+                                            <img src="./img/icons/html.png" />
+                                            <p>HTML 5</p>
+                                        </div>
+                                        <div class="project-icon">
+                                            <img src="./img/icons/css.png" />
+                                            <p>CSS 3</p>
+                                        </div>
+                                        <div class="project-icon">
+                                            <img src="./img/icons/javascript.png" />
+                                            <p>ECMAScript 2018</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4>LINKS</h4>
+                                    <div class="project-icon-group">
+                                        <a href="https://www.google.com/search?q=alpha" target="_blank" title="Visit project">
+                                            <div class="project-icon button">
+                                                <img src="./img/icons/language_white_24dp.svg" />
+                                                <p>WWW</p>
+                                            </div>
+                                        </a>
+                                        <a href="https://www.github.com/" target="_blank" title="See project's codebase">
+                                            <div class="project-icon button">
+                                                <img src="./img/icons/github.png" />
+                                                <p>Github</p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4>GALLERY</h4>
+                                    <div class="project-icon-group">
+                                        <div onclick="openGallery('b', 'mobile')" class="project-icon button">
+                                            <img src="./img/icons/phone_android_white_24dp.svg" />
+                                            <p>Mobile</p>
+                                        </div>
+                                        <div onclick="openGallery('b', 'desktop')" class="project-icon button">
+                                            <img src="./img/icons/desktop_windows_white_24dp.svg" />
+                                            <p>Desktop</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </article>
+
+                    <article class="project">
+                        <img class="project-background" src="./img/bg/splashes/splash3.png" />
+                        <h3>Nam at nunc quam</h3>
+                            <div class="project-details">
+                                <div class="project-description">
+                                    <p>Nam et tempor libero. Ut efficitur nulla turpis, nec posuere velit venenatis sollicitudin. Duis ornare justo eros, quis dapibus sem convallis ut. Vivamus orci velit, porta ac felis et, vehicula accumsan eros.</p>
+                                </div>
+                                <div>
+                                    <h4>TECHNOLOGIES</h4>
+                                    <div class="project-icon-group">
+                                        <div class="project-icon">
+                                            <img src="./img/icons/html.png" />
+                                            <p>HTML 5</p>
+                                        </div>
+                                        <div class="project-icon">
+                                            <img src="./img/icons/css.png" />
+                                            <p>CSS 3</p>
+                                        </div>
+                                        <div class="project-icon">
+                                            <img src="./img/icons/javascript.png" />
+                                            <p>ECMAScript 2018</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4>LINKS</h4>
+                                    <div class="project-icon-group">
+                                        <a href="https://www.google.com/search?q=alpha" target="_blank" title="Visit project">
+                                            <div class="project-icon button">
+                                                <img src="./img/icons/language_white_24dp.svg" />
+                                                <p>WWW</p>
+                                            </div>
+                                        </a>
+                                        <a href="https://www.github.com/" target="_blank" title="See project's codebase">
+                                            <div class="project-icon button">
+                                                <img src="./img/icons/github.png" />
+                                                <p>Github</p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4>GALLERY</h4>
+                                    <div class="project-icon-group">
+                                        <div onclick="openGallery('c', 'mobile')" class="project-icon button">
+                                            <img src="./img/icons/phone_android_white_24dp.svg" />
+                                            <p>Mobile</p>
+                                        </div>
+                                        <div onclick="openGallery('c', 'desktop')" class="project-icon button">
+                                            <img src="./img/icons/desktop_windows_white_24dp.svg" />
+                                            <p>Desktop</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </article>
+                    
+                    <article class="project">
+                        <img class="project-background" src="./img/bg/splashes/splash4.png" />
+                        <h3>Fusce blandit</h3>
+                            <div class="project-details">
+                                <div class="project-description">
+                                    <p>Nam et tempor libero. Ut efficitur nulla turpis, nec posuere velit venenatis sollicitudin. Duis ornare justo eros, quis dapibus sem convallis ut. Vivamus orci velit, porta ac felis et, vehicula accumsan eros.</p>
+                                </div>
+                                <div>
+                                    <h4>TECHNOLOGIES</h4>
+                                    <div class="project-icon-group">
+                                        <div class="project-icon">
+                                            <img src="./img/icons/html.png" />
+                                            <p>HTML 5</p>
+                                        </div>
+                                        <div class="project-icon">
+                                            <img src="./img/icons/css.png" />
+                                            <p>CSS 3</p>
+                                        </div>
+                                        <div class="project-icon">
+                                            <img src="./img/icons/javascript.png" />
+                                            <p>ECMAScript 2018</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4>LINKS</h4>
+                                    <div class="project-icon-group">
+                                        <a href="https://www.google.com/search?q=alpha" target="_blank" title="Visit project">
+                                            <div class="project-icon button">
+                                                <img src="./img/icons/language_white_24dp.svg" />
+                                                <p>WWW</p>
+                                            </div>
+                                        </a>
+                                        <a href="https://www.github.com/" target="_blank" title="See project's codebase">
+                                            <div class="project-icon button">
+                                                <img src="./img/icons/github.png" />
+                                                <p>Github</p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4>GALLERY</h4>
+                                    <div class="project-icon-group">
+                                        <div onclick="openGallery('d', 'mobile')" class="project-icon button">
+                                            <img src="./img/icons/phone_android_white_24dp.svg" />
+                                            <p>Mobile</p>
+                                        </div>
+                                        <div onclick="openGallery('d', 'desktop')" class="project-icon button">
+                                            <img src="./img/icons/desktop_windows_white_24dp.svg" />
+                                            <p>Desktop</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </article>
+
+                </section>
+            </div>
+            <footer>
+                <a href="http://www.freepik.com" target="_blank">Designed by denamorado / Freepik</a>
+            </footer>
         </div>
-        <footer>
-            <a href="http://www.freepik.com" target="_blank">Designed by denamorado / Freepik</a>
-        </footer>
+        <script>
+            const gallery = document.getElementById('gallery');
+            const image = document.getElementById('gallery-img');
+            const mainContent = document.getElementById('main-content');
+            const galleryPrevImageBtn = document.getElementById('gallery-prev-image-btn');
+            const galleryNextImageBtn = document.getElementById('gallery-next-image-btn');
+
+            let windowScrollY;
+
+            class GalleryData{
+        
+                constructor(paths){
+                    this.paths = paths;
+                    this.index = 0;
+                }
+
+                get path(){
+                    return this.paths[this.index];
+                }
+
+                get hasPrevious(){
+                    return this.index > 0;
+                }
+
+                get hasNext(){
+                    return this.index < this.paths.length - 1;
+                }
+
+                get nextPath(){
+                    if(this.hasNext){
+                        this.index++;
+                        return this.path;
+                    }else{
+                        return null;
+                    }
+                }
+
+                get previousPath(){
+                    if(this.hasPrevious){
+                        this.index--;
+                        return this.path;
+                    }else{
+                        return null;
+                    }
+                }
+            }
+
+            const projectsData = {
+                a: {
+                    galleries: {
+                        mobile: new GalleryData([
+                            './img/projects/a/mobile/1.jpg',
+                            './img/projects/a/mobile/2.jpg',
+                            './img/projects/a/mobile/3.jpg'
+                        ]),
+                        desktop: new GalleryData([
+                            './img/projects/a/desktop/1.jpg',
+                            './img/projects/a/desktop/2.jpg',
+                            './img/projects/a/desktop/3.jpg'
+                        ])
+                    }
+                },
+                b: {
+                    galleries: {
+                        mobile: new GalleryData([
+                            './img/projects/b/mobile/1.jpg',
+                            './img/projects/b/mobile/2.jpg',
+                            './img/projects/b/mobile/3.jpg'
+                        ]),
+                        desktop: new GalleryData([
+                            './img/projects/b/desktop/1.jpg',
+                            './img/projects/b/desktop/2.jpg',
+                            './img/projects/b/desktop/3.jpg'
+                        ])
+                    }
+                },
+                c: {
+                    galleries: {
+                        mobile: new GalleryData([
+                            './img/projects/c/mobile/1.jpg',
+                            './img/projects/c/mobile/2.jpg',
+                            './img/projects/c/mobile/3.jpg'
+                        ]),
+                        desktop: new GalleryData([
+                            './img/projects/c/desktop/1.jpg',
+                            './img/projects/c/desktop/2.jpg',
+                            './img/projects/c/desktop/3.jpg'
+                        ])
+                    }
+                },
+                d: {
+                    galleries: {
+                        mobile: new GalleryData([
+                            './img/projects/d/mobile/1.jpg',
+                            './img/projects/d/mobile/2.jpg',
+                            './img/projects/d/mobile/3.jpg'
+                        ]),
+                        desktop: new GalleryData([
+                            './img/projects/d/desktop/1.jpg',
+                            './img/projects/d/desktop/2.jpg',
+                            './img/projects/d/desktop/3.jpg'
+                        ])
+                    }
+                }
+            }
+
+            let data;
+
+            function openGallery(projectName, mode){
+                windowScrollY = window.scrollY;
+                showGallery();
+                data = projectsData[projectName]['galleries'][mode];
+                displayImg(data.path);
+                window.addEventListener('keyup', onKeyUp);
+            }
+
+            function closeGallery(){
+                hideGallery();
+                window.scrollTo(0, windowScrollY);
+                window.removeEventListener('keyup', onKeyUp);
+            }
+
+            function onKeyUp(e){
+                switch(e.key){
+                    case 'ArrowRight': nextImg();
+                    break;
+                    case 'ArrowLeft': prevImg();
+                    break;
+                    case 'Escape': closeGallery();
+                    break;
+                }
+            }
+
+            function prevImg(){
+                if(data.hasPrevious){
+                    displayImg(data.previousPath);
+                }
+            }
+
+            function nextImg(){
+                if(data.hasNext){
+                    displayImg(data.nextPath);
+                }
+            }
+
+            function displayImg(src){
+                image.src = src;
+                galleryPrevImageBtn.disabled = !data.hasPrevious;
+                galleryNextImageBtn.disabled = !data.hasNext;
+            }
+
+            function showGallery(){
+                mainContent.style.display = 'none';
+                gallery.style.display = "block";
+            }
+
+            function hideGallery(){
+                mainContent.style.display = 'block';
+                gallery.style.display = "none";
+            }
+        </script>
     </body>
 </html>
