@@ -1,0 +1,141 @@
+
+/*
+// those animations are commented out due to rendering errors on Chrome
+// I use requestAnimationFrame instead
+//
+//
+#sphere-speck-surface1 {
+    animation-name: sphere-rotateAt0;
+    animation-duration: 100s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+#sphere-speck-surface2 {
+    animation-name: sphere-rotateAt0;
+    animation-duration: 75s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-direction: reverse;
+}
+
+#sphere-speck-surface3 {
+    animation-name: sphere-rotateAt0;
+    animation-duration: 50s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+#sphere-speck-surface4 {
+    animation-name: sphere-rotateAt0;
+    animation-duration: 25s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-direction: reverse;
+}
+*/
+#sphere-text-layer-1 {
+    animation-name: sphere-rotateAt0;
+    animation-duration: 90s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+#sphere-text-layer-2 {
+    animation-name: sphere-rotateAt120;
+    animation-duration: 90s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+#sphere-text-layer-3 {
+    animation-name: sphere-rotateAt240;
+    animation-duration: 90s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+.sphere-scaleAt0{
+    animation-name: sphere-scaleAt0;
+    animation-duration: 1s;
+    animation-delay: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in-out;
+}
+.sphere-scaleAt120{
+    animation-name: sphere-scaleAt120;
+    animation-duration: 1s;
+    animation-delay: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in-out;
+}
+.sphere-scaleAt240{
+    animation-name: sphere-scaleAt240;
+    animation-duration: 1s;
+    animation-delay: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in-out;
+}
+
+
+/* SCALE AT ANGLE*/
+@keyframes sphere-scaleAt0 {
+    from {
+        transform: rotateZ(0turn) scale(0);
+    }
+
+    to {
+        transform: rotateZ(0turn) scale(1);
+    }
+}
+
+@keyframes sphere-scaleAt120 {
+    from {
+        transform: rotateZ(0.333turn) scale(0);
+    }
+
+    to {
+        transform: rotateZ(0.333turn) scale(1);
+    }
+}
+
+@keyframes sphere-scaleAt240 {
+    from {
+        transform: rotateZ(0.666turn) scale(0);
+    }
+
+    to {
+        transform: rotateZ(0.666turn) scale(1);
+    }
+}
+
+/*ROTATE*/
+@keyframes sphere-rotateAt0 {
+    from {
+        transform: rotateZ(0turn);
+    }
+
+    to {
+        transform: rotateZ(1turn);
+    }
+}
+
+@keyframes sphere-rotateAt120 {
+    from {
+        transform: rotateZ(0.333turn);
+    }
+
+    to {
+        transform: rotateZ(1.332turn);
+    }
+}
+
+@keyframes sphere-rotateAt240 {
+    from {
+        transform: rotateZ(0.666turn);
+    }
+
+    to {
+        transform: rotateZ(1.665turn);
+    }
+}

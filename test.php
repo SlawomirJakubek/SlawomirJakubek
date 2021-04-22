@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html class="loading">
     <head>
         <title>Test</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="theme-color" content="black" />
         <link type="text/css" rel="stylesheet" href="./css/normalize.css" />
+        <script src="./js/jquery-3.6.0.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="./objects/responsiveSphere/css/style.css" />
+        <script src="./objects/responsiveSphere/Sphere.js"></script>
     </head>
     <style>
         /* Material Icons */
@@ -52,7 +55,35 @@
             color: rgb(208, 254, 255);
         }
 
-        
+        .loading{
+            width:100vw;
+            height: 100vh;
+            min-width: 0px;
+            max-width: 100vw;
+            overflow-y: hidden;
+        }
+
+        /*header*/
+        .banner-loading{
+            width: 100vw;
+            overflow-y: scroll;
+        }
+
+        header{
+            padding: 0;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        } 
+        header p{
+            margin: 0;
+            font-size: 5em;
+            transition: font-size .5s;
+        }
+        /**/
 
         section{
             padding: 3%;
@@ -173,9 +204,26 @@
                     }
 
         /* footer */
+        footer{
+            padding: 2em;
+        }
+
+        footer div#footer-visible{
+            display: flex;
+            justify-content: space-around;
+        }
+
+        footer div#footer-hidden{
+            overflow: hidden;
+            display: none;
+        }
+
         footer a{
-            color: black;
-            text-decoration: none;
+            color: rgb(153, 240, 255);
+        }
+
+        footer a:visited{
+            color: rgb(211, 164, 255);
         }
 
         /* MEDIA QUERIES */
@@ -252,10 +300,6 @@
             user-select: none;
         }
 
-        /* #gallery button{
-            margin: 0;
-        } */
-
         #gallery > div{
             position: absolute;
             width: 100%;
@@ -292,9 +336,49 @@
             align-items: center;
         }
 
+        /*FORM*/
+        #contact > p{
+            margin: 3em 1em;
+            line-height: 2em;
+        }
+        input, textarea, option, select{
+            padding: .5em;
+            display: block;
+            margin: 10px auto;
+            text-align: center;
+            border-radius: .5em;
+            box-shadow: 3px 3px 10px -5px white;
+        }
+
+        form{
+            display: flex;
+            flex-direction: column;
+        }
+
+        label{
+            margin-top: 2em;
+            text-align: center;
+        }
+
+        form button{
+            width: 90px;
+            padding: .5em;
+            border-radius: 10%;
+            margin: 40px auto;
+        }
+
+        form textarea{
+            width: 100%;
+            height: 400px;
+            text-align: left;
+            padding: .9em;
+        }
+
+
 
     </style>
-    <body>
+    <body class="loading">
+
         <div id="gallery">
             <div id="gallery-image-cont">
                 <img id="gallery-img" src="#" alt="gallery image" />
@@ -305,19 +389,44 @@
                 <button onclick="nextImg()" class="button" id="gallery-next-image-btn">&#10095;</button>
             </div>
         </div>
-        <div id="main-content">
+
+        <header class="banner-loading">
+            <p id="banner-top">PLEASE</p>
+            <div id="banner-animation"></div>
+            <script>
+                const sphere = new Sphere();
+                sphere.addEventListener('COMPLETE', () =>{
+                    $('#banner-animation').append(sphere);
+                    $('#banner-top, #banner-bottom').css('font-size', '0');
+                    window.setTimeout(()=>{
+                        $('html, body').removeClass('loading');
+                        $('header').removeClass('banner-loading');
+                        sphere.hideText();
+                        window.scrollTo({
+                            left: 0,
+                            top: document.getElementById('about').getBoundingClientRect().top - 0,
+                            behavior: 'smooth'
+                        });
+                    }, 2000);
+                });
+            </script>
+            <p id="banner-bottom">WAIT</p>
+        </header>
+        
+        <main>
+
             <div class="section-container">
                 <section id="about">
                     <h2>ABOUT</h2>
                     <div>
                         <img src="./img/author.jpg" />Nullam justo leo, pharetra eu luctus et, vulputate ut sem. Maecenas eget lacinia tortor. Suspendisse lectus felis, viverra quis tincidunt ut, aliquet quis purus. Mauris venenatis elit sed quam ultrices, quis faucibus purus mollis. Phasellus vitae euismod lorem, sit amet tristique urna. Phasellus dictum pulvinar augue, sit amet tincidunt risus blandit id. Quisque lacinia, sapien at porta congue, purus sem pulvinar lectus, ac blandit nisi urna quis urna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed facilisis, ipsum ut aliquam pellentesque, tellus dui tempus metus, a pulvinar est mauris vitae lorem.
                     </div>
-                    </section>
+                </section>
             </div>
+
             <div class="section-container">
                 <section id="projects">
                     <h2>PROJECTS</h2>
-
 
                     <article class="project">
                         <img class="project-background" src="./img/bg/splashes/splash1.png" />
@@ -346,14 +455,14 @@
                                 <div>
                                     <h4>LINKS</h4>
                                     <div class="project-icon-group">
-                                        <a href="https://www.google.com/search?q=alpha" target="_blank" title="Visit project">
-                                            <div class="project-icon button">
+                                        <a class="button" href="https://www.google.com/search?q=alpha" target="_blank" title="Visit project">
+                                            <div class="project-icon">
                                                 <img src="./img/icons/language_white_24dp.svg" />
                                                 <p>WWW</p>
                                             </div>
                                         </a>
-                                        <a href="https://www.github.com/" target="_blank" title="See project's codebase">
-                                            <div class="project-icon button">
+                                        <a class="button" href="https://www.github.com/" target="_blank" title="See project's codebase">
+                                            <div class="project-icon">
                                                 <img src="./img/icons/github.png" />
                                                 <p>Github</p>
                                             </div>
@@ -363,11 +472,11 @@
                                 <div>
                                     <h4>GALLERY</h4>
                                     <div class="project-icon-group">
-                                        <div onclick="openGallery('a', 'mobile')" class="project-icon button">
+                                        <div tabindex="0" onkeyup="openGallery(event, 'a', 'mobile')" onclick="openGallery(event, 'a', 'mobile')" class="project-icon button">
                                             <img src="./img/icons/phone_android_white_24dp.svg" />
                                             <p>Mobile</p>
                                         </div>
-                                        <div onclick="openGallery('a', 'desktop')" class="project-icon button">
+                                        <div tabindex="0" onkeyup="openGallery(event, 'a', 'desktop')" onclick="openGallery(event, 'a', 'desktop')" class="project-icon button">
                                             <img src="./img/icons/desktop_windows_white_24dp.svg" />
                                             <p>Desktop</p>
                                         </div>
@@ -420,11 +529,11 @@
                                 <div>
                                     <h4>GALLERY</h4>
                                     <div class="project-icon-group">
-                                        <div onclick="openGallery('b', 'mobile')" class="project-icon button">
+                                        <div tabindex="0" onkeyup="openGallery(event, 'b', 'mobile')" onclick="openGallery(event, 'b', 'mobile')" class="project-icon button">
                                             <img src="./img/icons/phone_android_white_24dp.svg" />
                                             <p>Mobile</p>
                                         </div>
-                                        <div onclick="openGallery('b', 'desktop')" class="project-icon button">
+                                        <div tabindex="0" onkeyup="openGallery(event, 'b', 'desktop')" onclick="openGallery(event, 'b', 'desktop')" class="project-icon button">
                                             <img src="./img/icons/desktop_windows_white_24dp.svg" />
                                             <p>Desktop</p>
                                         </div>
@@ -477,11 +586,11 @@
                                 <div>
                                     <h4>GALLERY</h4>
                                     <div class="project-icon-group">
-                                        <div onclick="openGallery('c', 'mobile')" class="project-icon button">
+                                        <div tabindex="0" onkeyup="openGallery(event, 'c', 'mobile')" onclick="openGallery(event, 'c', 'mobile')" class="project-icon button">
                                             <img src="./img/icons/phone_android_white_24dp.svg" />
                                             <p>Mobile</p>
                                         </div>
-                                        <div onclick="openGallery('c', 'desktop')" class="project-icon button">
+                                        <div tabindex="0" onkeyup="openGallery(event, 'c', 'desktop')" onclick="openGallery(event, 'c', 'desktop')" class="project-icon button">
                                             <img src="./img/icons/desktop_windows_white_24dp.svg" />
                                             <p>Desktop</p>
                                         </div>
@@ -534,11 +643,11 @@
                                 <div>
                                     <h4>GALLERY</h4>
                                     <div class="project-icon-group">
-                                        <div onclick="openGallery('d', 'mobile')" class="project-icon button">
+                                        <div tabindex="0" onkeyup="openGallery(event, 'd', 'mobile')" onclick="openGallery(event, 'd', 'mobile')" class="project-icon button">
                                             <img src="./img/icons/phone_android_white_24dp.svg" />
                                             <p>Mobile</p>
                                         </div>
-                                        <div onclick="openGallery('d', 'desktop')" class="project-icon button">
+                                        <div tabindex="0" onkeyup="openGallery(event, 'd', 'desktop')" onclick="openGallery(event, 'd', 'desktop')" class="project-icon button">
                                             <img src="./img/icons/desktop_windows_white_24dp.svg" />
                                             <p>Desktop</p>
                                         </div>
@@ -549,14 +658,66 @@
 
                 </section>
             </div>
-            <footer>
-                <a href="http://www.freepik.com" target="_blank">Designed by denamorado / Freepik</a>
-            </footer>
-        </div>
+
+            <div class="section-container">
+                <section id="contact">
+                    <h2>Contact</h2>
+                    <p>If you have a query write to me at s@jakubek.co.uk or use the form below</p>
+                    <form>
+                        
+                        <label for="title">Title
+                            <select id="title" name="title">
+                                <option value="Mr">Mr</option>
+                                <option value="Master">Master</option>
+                                <option value="Mrs">Mrs</option>
+                                <option value="Ms">Ms</option>
+                                <option value="Miss">Miss</option>
+                                <option value="Mx">Mx</option>
+                            </select>
+                        </label>
+
+                        <label for="name">Name
+                            <input id="name" name="name" required type="text" placeholder="name" value="" />
+                        </label>
+
+                        <label for="surname">Surname
+                            <input id="surname" name="surname" required type="text" placeholder="surname" value="" />
+                        </label>
+
+                        <label for="email">Email
+                            <input id="email" name="email" required type="text" placeholder="email" value="" />
+                        </label>
+
+                        <label for="telephone">Telephone
+                            <input id="telephone" name="telephone" type="text" placeholder="telephone" value=""/>
+                        </label>
+
+                         <label for="message">Message
+                            <textarea id="message" name="message" required placeholder="message"></textarea>
+                        </label>
+
+                        <button class='button'>Send</button>
+                    </form>
+                </section>
+            </div>  
+
+        </main>
+
+        <footer>
+                <div id="footer-visible">
+                    <p>&copy; Slawomir Jakubek <?= date('Y'); ?></p>
+                    <p onclick="$('#footer-hidden').slideToggle();" class="button">credits &#10162;</p>
+                </div>
+                <div id="footer-hidden">
+                    <a href="http://www.freepik.com" target="_blank">Background images at each project designed by denamorado / Freepik</a>
+                </div>
+        </footer>
+
         <script>
+            /*GALLERY*/
             const gallery = document.getElementById('gallery');
             const image = document.getElementById('gallery-img');
-            const mainContent = document.getElementById('main-content');
+            const mainContent = document.getElementsByTagName('main')[0];
             const galleryPrevImageBtn = document.getElementById('gallery-prev-image-btn');
             const galleryNextImageBtn = document.getElementById('gallery-next-image-btn');
 
@@ -661,7 +822,13 @@
 
             let data;
 
-            function openGallery(projectName, mode){
+            function openGallery(event, projectName, mode){
+                if(event.type == 'keyup'){
+                    if(event.key != 'Enter'){
+                        return;
+                    }
+                }
+
                 windowScrollY = window.scrollY;
                 showGallery();
                 data = projectsData[projectName]['galleries'][mode];
@@ -713,6 +880,14 @@
                 mainContent.style.display = 'block';
                 gallery.style.display = "none";
             }
+
+            /*CONTACT*/
+
+            $('form').on('submit', e => {
+                e.preventDefault();
+                console.log($('form').serialize());
+            });
+
         </script>
     </body>
 </html>
