@@ -5,13 +5,16 @@ class Sphere extends HTMLDivElement{
         const MAX_SIDE = 432;
         const INNER_SIDE_PERC = .833;
         const INNER_SIDE = MAX_SIDE * INNER_SIDE_PERC;
-        const SPECKS_URL = './objects/sphere/img/specks.jpg';
-        const GLASS_URL = './objects/sphere/img/glass.jpg';
-        const LOADING_URL = './objects/sphere/img/loading.png';
+        const SPECKS_URL = './objects/responsiveSphere/img/specks.jpg';
+        const GLASS_URL = './objects/responsiveSphere/img/glass.jpg';
+        const LOADING_URL = './objects/responsiveSphere/img/loading.png';
         
         this.style.position = 'relative';
         this.style.transition = 'max-width .5s, max-height .5s';
+        
         this.style.maxWidth = this.style.maxHeight = 0;
+        this.style.zIndex = 10;
+        this.style.top = 0;
 
         this._textLayers = document.createElement('div');
         this._textLayers.style.transition = 'opacity .5s';
@@ -149,11 +152,43 @@ class Sphere extends HTMLDivElement{
 
                 //delay
                 window.setTimeout(()=>{
-                    console.log('timeout');
+                    console.log('delay over');
                     this.dispatchEvent(new Event('COMPLETE'));
                     requestAnimationFrame(rotateSpecks); 
                     void this.offsetWidth;
                     this.style.maxWidth = this.style.maxHeight = `${MAX_SIDE}px`;
+
+                    window.onscroll = () => {
+                        console.log('SCROLL - START');
+                        let newTop = this.initRec.top - window.scrollY;
+
+                        if(newTop < 0){
+                            newTop = 0;
+                        }
+
+                        if(this.style.top != `${newTop}px`){
+                            this.style.top = `${newTop}px`;
+                        }
+                        
+                        if(newTop <= 0){
+                            this.style.right = 0;
+                            this.style.width = '100px';
+                        }else{
+                            this.style.right = this.initRec.right + 'px';
+                            this.style.width = this.initRec.width + 'px';
+                        }
+                        console.log('SCROLL - END');
+                    };
+
+                    window.onresize = e => {
+                        console.log('RESIZE - START');
+                        this.style.position = 'relative';
+                        this.style.top = this.style.right = this.style.width = '';
+                        //void this.offsetWidth;
+                        this.stick();
+                        console.log('RESIZE - END');
+                    }
+
                 }, 1000);
             }
         }
@@ -185,5 +220,30 @@ class Sphere extends HTMLDivElement{
     hideText(){
         this._textLayers.style.opacity = 0;
     }
+
+    stick(){
+
+        this.initRec = {
+            right: this.parentElement.offsetLeft,//this.getBoundingClientRect().left,
+            top: this.parentElement.offsetTop,//this.getBoundingClientRect().top,
+            width: this.getBoundingClientRect().width
+        };
+
+        if(this.isSticky){
+            this.style.top = 0;
+            this.style.right = 0;
+            this.style.width = '100px';
+        }else{
+            this.style.top = this.initRec.top + 'px';
+            this.style.right = this.initRec.right + 'px';
+            this.style.transition = 'width 1s, right 1s';
+        }
+        
+        this.style.position = 'fixed';
+    }
+
+    get isSticky(){
+        return window.scrollY >= this.initRec.top;
+    } 
 }
 customElements.define('my-sphere', Sphere, { extends: 'div' });

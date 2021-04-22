@@ -402,12 +402,13 @@
                         $('html, body').removeClass('loading');
                         $('header').removeClass('banner-loading');
                         sphere.hideText();
-                        window.scrollTo({
-                            left: 0,
-                            top: document.getElementById('about').getBoundingClientRect().top - 0,
-                            behavior: 'smooth'
-                        });
-                    }, 2000);
+                        sphere.stick();
+                        // window.scrollTo({
+                        //     left: 0,
+                        //     top: document.getElementById('about').getBoundingClientRect().top - 0,
+                        //     behavior: 'smooth'
+                        // });
+                    }, 1000);
                 });
             </script>
             <p id="banner-bottom">WAIT</p>
