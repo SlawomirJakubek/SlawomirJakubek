@@ -403,6 +403,7 @@
                         $('header').removeClass('banner-loading');
                         sphere.hideText();
                         sphere.stick();
+                        sphere.minimizeBoundryObject = document.getElementById('objectX');
                         // window.scrollTo({
                         //     left: 0,
                         //     top: document.getElementById('about').getBoundingClientRect().top - 0,
@@ -418,7 +419,7 @@
 
             <div class="section-container">
                 <section id="about">
-                    <h2>ABOUT</h2>
+                    <h2 id="objectX">ABOUT</h2>
                     <div>
                         <img src="./img/author.jpg" />Nullam justo leo, pharetra eu luctus et, vulputate ut sem. Maecenas eget lacinia tortor. Suspendisse lectus felis, viverra quis tincidunt ut, aliquet quis purus. Mauris venenatis elit sed quam ultrices, quis faucibus purus mollis. Phasellus vitae euismod lorem, sit amet tristique urna. Phasellus dictum pulvinar augue, sit amet tincidunt risus blandit id. Quisque lacinia, sapien at porta congue, purus sem pulvinar lectus, ac blandit nisi urna quis urna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed facilisis, ipsum ut aliquam pellentesque, tellus dui tempus metus, a pulvinar est mauris vitae lorem.
                     </div>

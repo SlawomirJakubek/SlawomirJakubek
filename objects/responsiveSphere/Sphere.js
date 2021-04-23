@@ -1,5 +1,6 @@
 class Sphere extends HTMLDivElement{
 
+
     constructor(){
         super();
         const MAX_SIDE = 432;
@@ -8,6 +9,7 @@ class Sphere extends HTMLDivElement{
         const SPECKS_URL = './objects/responsiveSphere/img/specks.jpg';
         const GLASS_URL = './objects/responsiveSphere/img/glass.jpg';
         const LOADING_URL = './objects/responsiveSphere/img/loading.png';
+        this.scrollHistory = [0];
         
         this.style.position = 'relative';
         this.style.transition = 'max-width .5s, max-height .5s';
@@ -159,34 +161,41 @@ class Sphere extends HTMLDivElement{
                     this.style.maxWidth = this.style.maxHeight = `${MAX_SIDE}px`;
 
                     window.onscroll = () => {
-                        console.log('SCROLL - START');
+                        this.addScrollY();
+                        //console.log('SCROLL - START');
+                        
+                        // TOP POSITION
+                        // calculate new
                         let newTop = this.initRec.top - window.scrollY;
-
-                        if(newTop < 0){
-                            newTop = 0;
-                        }
-
-                        if(this.style.top != `${newTop}px`){
-                            this.style.top = `${newTop}px`;
+                        // prevent negative
+                        if(newTop < 0) newTop = 0;
+                        // set new
+                        if(this.style.top != `${newTop}px`) this.style.top = `${newTop}px`;
+                        
+                        // RIGHT && WIDTH
+                        if(this.isInContent && this.isScrollingDown){
+                            
+                            this.minimize();
+                            
                         }
                         
-                        if(newTop <= 0){
-                            this.style.right = 0;
-                            this.style.width = '100px';
-                        }else{
-                            this.style.right = this.initRec.right + 'px';
-                            this.style.width = this.initRec.width + 'px';
+                        if(!this.isInContent && !this.isScrollingDown){
+
+                            this.maximize();
                         }
-                        console.log('SCROLL - END');
+
+                        console.log(this.isInContent, this.isScrollingDown);
+
+                        //console.log('SCROLL - END');
                     };
 
                     window.onresize = e => {
-                        console.log('RESIZE - START');
+                        //console.log('RESIZE - START');
                         this.style.position = 'relative';
                         this.style.top = this.style.right = this.style.width = '';
                         //void this.offsetWidth;
                         this.stick();
-                        console.log('RESIZE - END');
+                        //console.log('RESIZE - END');
                     }
 
                 }, 1000);
@@ -217,6 +226,27 @@ class Sphere extends HTMLDivElement{
         }
     }
 
+    minimize(){
+        this.style.right = 0;
+        this.style.width = '100px';
+    }
+
+    maximize(){
+        if(this.style.right != `${this.initRec.right}px`) this.style.right = `${this.initRec.right}px`;
+        if(this.style.width != `${this.initRec.width}px`) this.style.width = `${this.initRec.width}px`;
+    }
+
+    addScrollY(){
+        this.scrollHistory.push(window.scrollY);
+        if(this.scrollHistory.length > 2){
+            this.scrollHistory.shift();
+        }
+    }
+
+    get isScrollingDown(){
+        return this.scrollHistory[0] < this.scrollHistory[1];
+    }
+
     hideText(){
         this._textLayers.style.opacity = 0;
     }
@@ -225,7 +255,7 @@ class Sphere extends HTMLDivElement{
 
         this.initRec = {
             right: this.parentElement.offsetLeft,//this.getBoundingClientRect().left,
-            top: this.parentElement.offsetTop,//this.getBoundingClientRect().top,
+            top: this.parentElement.offsetTop,
             width: this.getBoundingClientRect().width
         };
 
@@ -234,7 +264,7 @@ class Sphere extends HTMLDivElement{
             this.style.right = 0;
             this.style.width = '100px';
         }else{
-            this.style.top = this.initRec.top + 'px';
+            this.style.top = (this.initRec.top  - window.scrollY) + 'px';
             this.style.right = this.initRec.right + 'px';
             this.style.transition = 'width 1s, right 1s';
         }
@@ -245,5 +275,25 @@ class Sphere extends HTMLDivElement{
     get isSticky(){
         return window.scrollY >= this.initRec.top;
     } 
+
+    get isInContent(){
+        return this.minimizeBoundry - this.logoBottom <= 0;
+    }
+
+    get logoBottom(){
+        return this.getBoundingClientRect().bottom;
+    }
+
+    set minimizeBoundryObject(obj){
+        this._minimizeBoundryObject = obj;
+    }
+
+    get minimizeBoundryObject(){
+        return this._minimizeBoundryObject;
+    }
+
+    get minimizeBoundry(){
+        return this.minimizeBoundryObject.getBoundingClientRect().top;
+    }
 }
 customElements.define('my-sphere', Sphere, { extends: 'div' });
