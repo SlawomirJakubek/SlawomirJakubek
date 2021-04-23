@@ -266,7 +266,7 @@ class Sphere extends HTMLDivElement{
         }else{
             this.style.top = (this.initRec.top  - window.scrollY) + 'px';
             this.style.right = this.initRec.right + 'px';
-            this.style.transition = 'width 1s, right 1s';
+            // this is logoResizeing branch this.style.transition = 'width 1s, right 1s';
         }
         
         this.style.position = 'fixed';
