@@ -1,0 +1,19 @@
+body{
+    margin: 0;
+    background-color: black;
+}
+h1{
+    font-family: Tangerine, "Times New Roman", Times, serif;
+
+    color: rgb(190, 255, 255);
+    font-size: 60px;
+    text-align: center;
+    margin: 0;
+    line-height: 100vh;
+    font-weight: 700;
+    user-select: none;
+}
+
+.colorBlack{
+    color: black;
+}

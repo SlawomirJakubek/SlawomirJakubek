@@ -402,8 +402,9 @@
                         $('html, body').removeClass('loading');
                         $('header').removeClass('banner-loading');
                         sphere.hideText();
-                        sphere.stick();
                         sphere.minimizeBoundryObject = document.getElementById('objectX');
+                        sphere.stick();
+                        
                         // window.scrollTo({
                         //     left: 0,
                         //     top: document.getElementById('about').getBoundingClientRect().top - 0,
