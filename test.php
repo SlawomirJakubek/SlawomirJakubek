@@ -85,7 +85,7 @@
             font-weight: 700;
             margin: 0;
             font-size: 5em;
-            transition: font-size .5s;
+            transition: font-size 1s;
             text-transform: lowercase;
         }
 
@@ -407,24 +407,25 @@
             <div id="banner-animation"></div>
             <script>
                 const sphere = new Sphere();
-                sphere.addEventListener('COMPLETE', () =>{
-
+                sphere.addEventListener(Sphere.SPHERE_LOADED , () =>{
+                    console.log('test.php', Sphere.SPHERE_LOADED);
                     $('#banner-animation').append(sphere);
                     $('#banner-top, #banner-bottom').css('font-size', '0');
+                });
 
-                    window.setTimeout(()=>{
-                        $('html, body').removeClass('loading');
-                        $('header').removeClass('banner-loading');
-                        sphere.hideText();
-                        sphere.minimizeBoundryObject = document.getElementById('objectX');
-                        sphere.reset();
-                        
-                        window.scrollTo({
-                            left: 0,
-                            top: document.getElementById('about').getBoundingClientRect().top - 0,
-                            behavior: 'smooth'
-                        });
-                    }, 1000);
+                sphere.addEventListener(Sphere.DOM_LOADED, ()=>{
+                    console.log('test.php', Sphere.DOM_LOADED);
+                    $('html, body').removeClass('loading');
+                    $('header').removeClass('banner-loading');
+                    sphere.minimizeBoundryObject = document.getElementById('objectX');
+                    sphere.hideText();
+                    sphere.reset();
+
+                    window.scrollTo({
+                        left: 0,
+                        top: document.getElementById('about').getBoundingClientRect().top - 0,
+                        behavior: 'smooth'
+                    });
                 });
             </script>
             <p id="banner-bottom">WAIT</p>

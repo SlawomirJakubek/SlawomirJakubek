@@ -1,8 +1,16 @@
 class Sphere extends HTMLDivElement{
-
+    STATIC = 'static';
+    SLIDE = 'slide';
+    SCROLL = 'scroll';
+    static DOM_LOADED = 'DOMLoaded';
+    static SPHERE_LOADED = 'sphere loaded';
+    stateOnScroll = this.STATIC;
+    loadedCounter = 0;
+    loadedTarget = 2;
 
     constructor(){
         super();
+        const LOADING_DELAY = 4000;
         const MAX_SIDE = 432;
         const INNER_SIDE_PERC = .833;
         const INNER_SIDE = MAX_SIDE * INNER_SIDE_PERC;
@@ -12,7 +20,7 @@ class Sphere extends HTMLDivElement{
         this.scrollHistory = [0];
         
         this.style.position = 'relative';
-        this.style.transition = 'max-width .5s, max-height .5s';
+        this.style.transition = 'max-width 1s, max-height 1s';
         
         this.style.maxWidth = this.style.maxHeight = 0;
         this.style.zIndex = 10;
@@ -20,7 +28,7 @@ class Sphere extends HTMLDivElement{
 
         this._textLayers = document.createElement('div');
         this._textLayers.style.transition = 'opacity .5s';
-        this._textLayers.style.position = 'relative';//must be or overflow will not work properly
+        this._textLayers.style.position = 'relative';//so overflow would work
         this._textLayers.style.width = this._textLayers.style.height = '100%';
         this._textLayers.style.overflow = 'hidden';
         this.appendChild(this._textLayers);
@@ -48,6 +56,8 @@ class Sphere extends HTMLDivElement{
         innerLayers.style.width = innerLayers.style.height = '100%';
         innerLayers.style.backgroundImage = 'radial-gradient(closest-side, rgb(0, 80, 80),  rgb(0, 180, 180), rgb(0, 40, 40))';
         innerLayersContainer.appendChild(innerLayers);
+
+        window.addEventListener('load', ()=>{ this.onLoaded(); });
         
         let speckLayerIndex = 0;
         let specks = new Image();
@@ -148,37 +158,35 @@ class Sphere extends HTMLDivElement{
         loading.src = LOADING_URL;
 
         let layersLoaded = 0;
+
         let completed = () => {
+            
             layersLoaded++;
+
             if(layersLoaded == 3){
+                
+                //inform it is ready to by added
+                this.dispatchEvent(new Event(Sphere.SPHERE_LOADED));
+                
+                // animate specks
+                requestAnimationFrame(rotateSpecks); 
+                
+                // animate growth
+                void this.offsetWidth;
+                this.style.maxWidth = this.style.maxHeight = `${MAX_SIDE}px`;
 
-                //delay
-                window.setTimeout(()=>{
-                    //console.log('sphere downloaded');
-                    
-                    //inform it is ready to by added
-                    this.dispatchEvent(new Event('COMPLETE'));
-                    
-                    // animate specks
-                    requestAnimationFrame(rotateSpecks); 
-                    
-                    // animate growth
-                    void this.offsetWidth;
-                    this.style.maxWidth = this.style.maxHeight = `${MAX_SIDE}px`;
+                window.onscroll = ()=>{this.setPosition()};
+                
+                const onResize = () => {this.reset()};
+                const removeOnResizeOnTouchStart = () =>{
+                    document.removeEventListener('touchstart', removeOnResizeOnTouchStart);
+                    window.removeEventListener('resize', onResize);
+                };
 
-                    window.onscroll = ()=>{this.setPosition()};
-                    
-                    const onResize = () => {this.reset()};
-                    const removeOnResizeOnTouchStart = () =>{
-                        //console.log('window.removeEventListener(\'resize\', onResize)');
-                        document.removeEventListener('touchstart', removeOnResizeOnTouchStart);
-                        window.removeEventListener('resize', onResize);
-                    };
-
-                    window.addEventListener('resize', onResize);
-                    document.addEventListener('touchstart', removeOnResizeOnTouchStart);
-
-                }, 1000);
+                window.addEventListener('resize', onResize);
+                document.addEventListener('touchstart', removeOnResizeOnTouchStart);
+                
+                window.setTimeout(()=>{ console.log('sphereLoaded'); this.onLoaded(); }, LOADING_DELAY);
             }
         }
 
@@ -203,6 +211,14 @@ class Sphere extends HTMLDivElement{
 
             }
             requestAnimationFrame(rotateSpecks);
+        }
+    }
+
+    onLoaded(){
+
+        this.loadedCounter++;
+        if(this.loadedCounter == this.loadedTarget){
+            this.dispatchEvent(new Event(Sphere.DOM_LOADED));
         }
     }
 
@@ -241,14 +257,13 @@ class Sphere extends HTMLDivElement{
 
         // console.log('reset', this.initialValues);
         this.style.position = 'fixed';
-        this.setPosition('from reset');
+        this.setPosition();
+        
     }
 
     //onScroll
     setPosition(x){
         // console.log('setPosition', x, 'current scrollY: ', window.scrollY);
-        const bodyRightMargin = parseInt(window.getComputedStyle(document.body).getPropertyValue('margin-right').replace('px', ''));
-
 
         const setInPx = (top, right, width) => {
             this.style.top = top + 'px';
@@ -257,21 +272,24 @@ class Sphere extends HTMLDivElement{
             //console.log('set: ', top, right, width);
         }
 
-        if(window.scrollY <= this.initialValues.top){
+        const isInRope = window.scrollY <= this.initialValues.top;
+        const isInSlide = window.scrollY > this.initialValues.mainRange.min && window.scrollY <= this.initialValues.mainRange.max;
+
+        if(isInRope){
             
             setInPx(
                 window.scrollY <= this.initialValues.top ? this.initialValues.top - window.scrollY : 0,
                 this.initialValues.right,
                 this.initialValues.width);
         }else{
-            if(window.scrollY > this.initialValues.mainRange.min && window.scrollY <= this.initialValues.mainRange.max){
+            if(isInSlide){
                 setInPx(
                     0,
-                    window.scrollY <= this.initialValues.mainRange.max ? this.translateInRange(window.scrollY, this.initialValues.rightRange) : bodyRightMargin,
+                    window.scrollY <= this.initialValues.mainRange.max ? this.translateInRange(window.scrollY, this.initialValues.rightRange) : this.initialValues.rightRange.max,
                     window.scrollY <= this.initialValues.mainRange.max ? this.translateInRange(window.scrollY, this.initialValues.widthRange) : 100
                 );
             }else{
-                setInPx(0, bodyRightMargin, 100);
+                setInPx(0, this.initialValues.rightRange.max, 100);
             }
         }
     }
