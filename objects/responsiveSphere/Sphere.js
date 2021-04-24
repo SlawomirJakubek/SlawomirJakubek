@@ -154,23 +154,29 @@ class Sphere extends HTMLDivElement{
 
                 //delay
                 window.setTimeout(()=>{
-                    console.log('delay over');
+                    //console.log('sphere downloaded');
+                    
+                    //inform it is ready to by added
                     this.dispatchEvent(new Event('COMPLETE'));
-
+                    
+                    // animate specks
                     requestAnimationFrame(rotateSpecks); 
+                    
+                    // animate growth
                     void this.offsetWidth;
                     this.style.maxWidth = this.style.maxHeight = `${MAX_SIDE}px`;
-                    this.setScrollRope();
-                    this.setScrollRightAlignAndShrink();
 
-                    window.onresize = e => {
-                        //console.log('RESIZE - START');
-                        this.style.position = 'relative';
-                        this.style.top = this.style.right = this.style.width = '';
-                        //void this.offsetWidth;
-                        this.stick();
-                        //console.log('RESIZE - END');
-                    }
+                    window.onscroll = ()=>{this.setPosition()};
+                    
+                    const onResize = () => {this.reset()};
+                    const removeOnResizeOnTouchStart = () =>{
+                        //console.log('window.removeEventListener(\'resize\', onResize)');
+                        document.removeEventListener('touchstart', removeOnResizeOnTouchStart);
+                        window.removeEventListener('resize', onResize);
+                    };
+
+                    window.addEventListener('resize', onResize);
+                    document.addEventListener('touchstart', removeOnResizeOnTouchStart);
 
                 }, 1000);
             }
@@ -200,98 +206,74 @@ class Sphere extends HTMLDivElement{
         }
     }
 
-    minimize(){
-        let right = parseInt(this.style.right.replace('px', ''));
-        right -= 6;
-        this.style.right = right > 0 ? `${right}px` : 0;
-        this.style.width =  this.minimizeBoundry > 100 ? `${this.minimizeBoundry}px` : '100px';
-    }
-
-    maximize(){
-        
-        let right = parseInt(this.style.right.replace('px', ''));
-        right += 6;
-        this.style.right = right < this.initRec.right ? `${right}px` : `${this.initRec.right}px`;
-        this.style.width =  this.minimizeBoundry < this.initRec.width ? `${this.minimizeBoundry}px` : `${this.initRec.width}px`;
-    }
-
-    addScrollY(){
-        this.scrollHistory.push(window.scrollY);
-        if(this.scrollHistory.length > 2){
-            this.scrollHistory.shift();
-        }
-    }
-
-    get isScrollingDown(){
-        return this.scrollHistory[0] < this.scrollHistory[1];
-    }
-
     hideText(){
         this._textLayers.style.opacity = 0;
     }
 
-    stick(){
-
-        this.initRec = {
-            right: this.parentElement.offsetLeft,//this.getBoundingClientRect().left,
-            top: this.parentElement.offsetTop,
-            bottom:  this.parentElement.offsetTop + this.parentElement.offsetHeight,
-            width: this.getBoundingClientRect().width
-        };
-        //console.log(this.initRec);
-
-        this.sphereBottomH2TopRange = {
-            min: this.initRec.top,
-            max: this.minimizeBoundry
-        };
-
-        this.sphereWidthRange = {
-            min: this.parentElement.offsetHeight,
-            max: 100
-        }
-
-        this. sphereRightRange = {
-            min: this.parentElement.offsetLeft,
-            max: parseInt(window.getComputedStyle(document.body).getPropertyValue('margin-right').replace('px', ''))
-        }
-        //console.log(this.sphereBottomH2TopRange, this.sphereWidthRange, this. sphereRightRange);
-
-        if(this.isSticky){
-            // if(window.scrollY >= this.sphereBottomH2TopRange.min && window.scrollY <= this.sphereBottomH2TopRange.max){
-                                
-            //     this.style.right = Math.floor(this.translateInRange(window.scrollY, this.sphereRightRange)) + 'px';
-            //     this.style.width = `${this.translateInRange(window.scrollY, this.sphereWidthRange)}px`;
-            // }
-
-            if(window.scrollY > this.minimizeBoundry){
-                console.log('this.isSticky')
-                // this.style.right = `${this.sphereRightRange.max}px`;
-                // this.style.width = '100px';
-                this.style.top = '0px';
-            }
-
-            
-        }else{
-            console.log('A')
-            this.style.top = (this.initRec.top  - window.scrollY) + 'px';
-
-            this.style.right = this.initRec.right + 'px';
-            // this is logoResizeing branch
-        }
+    //onResize
+    reset(){
+        this.style.position = 'relative';
+        this.style.top = this.style.right = this.style.width = '';
+        void this.offsetWidth;
         
+        this.initialValues = {
+            top: undefined,
+            right: undefined,
+            width: undefined,
+            mainRange: {
+                min: undefined,
+                max: this.minimizeBoundryObject.offsetTop
+            },
+            rightRange: {
+                min: undefined,
+                max: parseInt(window.getComputedStyle(document.body).getPropertyValue('margin-right').replace('px', ''))
+            },
+            widthRange: {
+                min: undefined,
+                max: 100
+            }
+        };
+
+        this.initialValues.top = this.initialValues.mainRange.min = this.offsetTop;
+        this.initialValues.right = this.initialValues.rightRange.min = this.getBoundingClientRect().left;
+        this.initialValues.width = this.initialValues.widthRange.min = this.getBoundingClientRect().width;
+        
+
+        // console.log('reset', this.initialValues);
         this.style.position = 'fixed';
+        this.setPosition('from reset');
     }
 
-    get isSticky(){
-        return window.scrollY >= this.initRec.top;
-    } 
+    //onScroll
+    setPosition(x){
+        // console.log('setPosition', x, 'current scrollY: ', window.scrollY);
+        const bodyRightMargin = parseInt(window.getComputedStyle(document.body).getPropertyValue('margin-right').replace('px', ''));
 
-    get isInContent(){
-        return this.minimizeBoundry - this.logoBottom <= 0;
-    }
 
-    get logoBottom(){
-        return this.getBoundingClientRect().bottom;
+        const setInPx = (top, right, width) => {
+            this.style.top = top + 'px';
+            this.style.right = right + 'px';
+            this.style.width = width + 'px';
+            //console.log('set: ', top, right, width);
+        }
+
+        if(window.scrollY <= this.initialValues.top){
+            
+            setInPx(
+                window.scrollY <= this.initialValues.top ? this.initialValues.top - window.scrollY : 0,
+                this.initialValues.right,
+                this.initialValues.width);
+        }else{
+            if(window.scrollY > this.initialValues.mainRange.min && window.scrollY <= this.initialValues.mainRange.max){
+                setInPx(
+                    0,
+                    window.scrollY <= this.initialValues.mainRange.max ? this.translateInRange(window.scrollY, this.initialValues.rightRange) : bodyRightMargin,
+                    window.scrollY <= this.initialValues.mainRange.max ? this.translateInRange(window.scrollY, this.initialValues.widthRange) : 100
+                );
+            }else{
+                setInPx(0, bodyRightMargin, 100);
+            }
+        }
     }
 
     set minimizeBoundryObject(obj){
@@ -302,40 +284,8 @@ class Sphere extends HTMLDivElement{
         return this._minimizeBoundryObject;
     }
 
-    get minimizeBoundry(){
-        //return this.minimizeBoundryObject.getBoundingClientRect().top;
-        return this.minimizeBoundryObject.offsetTop;
-    }
-
     translateInRange(mainRangeInput, secondRange) {
-        return (((mainRangeInput - this.sphereBottomH2TopRange.min) * (secondRange.max - secondRange.min)) / (this.sphereBottomH2TopRange.max - this.sphereBottomH2TopRange.min)) + secondRange.min;
-    }
-
-    setScrollRope(){
-        window.addEventListener('scroll', () => {
-            console.log('rope');
-            let newTop = this.initRec.top - window.scrollY;
-            if(newTop < 0) newTop = 0;
-            if(this.style.top != `${newTop}px`) this.style.top = `${newTop}px`;
-        });
-    }
-
-    setScrollRightAlignAndShrink(){
-
-        window.onscroll = () => {
-                        
-            if(window.scrollY >= this.sphereBottomH2TopRange.min && window.scrollY <= this.sphereBottomH2TopRange.max){
-                console.log('setScrollRightAlignAndShrink 1');               
-                this.style.right = Math.floor(this.translateInRange(window.scrollY, this.sphereRightRange)) + 'px';
-                this.style.width = `${this.translateInRange(window.scrollY, this.sphereWidthRange)}px`;
-            }
-
-            if(window.scrollY > this.sphereBottomH2TopRange.max){
-                console.log('setScrollRightAlignAndShrink 2');
-                this.style.right = `${this.sphereRightRange.max}px`;
-                this.style.width = `${100}px`;
-            }
-        };
+        return (((mainRangeInput - this.initialValues.mainRange.min) * (secondRange.max - secondRange.min)) / (this.initialValues.mainRange.max - this.initialValues.mainRange.min)) + secondRange.min;
     }
 }
 customElements.define('my-sphere', Sphere, { extends: 'div' });

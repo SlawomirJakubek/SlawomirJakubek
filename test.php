@@ -5,6 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="theme-color" content="black" />
         <link type="text/css" rel="stylesheet" href="./css/normalize.css" />
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Tangerine:wght@700&display=block" rel="stylesheet">
         <script src="./js/jquery-3.6.0.min.js"></script>
         <link rel="stylesheet" type="text/css" href="./objects/responsiveSphere/css/style.css" />
         <script src="./objects/responsiveSphere/Sphere.js"></script>
@@ -79,10 +81,18 @@
             align-items: center;
         } 
         header p{
+            font-family: "Times New Roman", Times, serif;
+            font-weight: 700;
             margin: 0;
             font-size: 5em;
             transition: font-size .5s;
+            text-transform: lowercase;
         }
+
+        #banner-animation{
+            max-height: 100vh;
+        }  
+
         /**/
 
         section{
@@ -93,12 +103,14 @@
         h2{
             font-size: 2em;
             font-family: 'Work Sans', 'Times New Roman', Times, serif;
+            font-weight: 700;
             text-align: left;
             padding: .5em 0 .5em 1em;
             border: 1px solid rgba(71, 71, 71, 0.219);
             margin: 0 0 40px 0;
             line-height: normal;
             background-color: rgba(0, 139, 139, 0.164);
+            text-transform: lowercase;
         }
 
         /* ABOUT */
@@ -396,20 +408,22 @@
             <script>
                 const sphere = new Sphere();
                 sphere.addEventListener('COMPLETE', () =>{
+
                     $('#banner-animation').append(sphere);
                     $('#banner-top, #banner-bottom').css('font-size', '0');
+
                     window.setTimeout(()=>{
                         $('html, body').removeClass('loading');
                         $('header').removeClass('banner-loading');
                         sphere.hideText();
                         sphere.minimizeBoundryObject = document.getElementById('objectX');
-                        sphere.stick();
+                        sphere.reset();
                         
-                        // window.scrollTo({
-                        //     left: 0,
-                        //     top: document.getElementById('about').getBoundingClientRect().top - 0,
-                        //     behavior: 'smooth'
-                        // });
+                        window.scrollTo({
+                            left: 0,
+                            top: document.getElementById('about').getBoundingClientRect().top - 0,
+                            behavior: 'smooth'
+                        });
                     }, 1000);
                 });
             </script>
